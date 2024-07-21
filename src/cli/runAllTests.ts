@@ -1,5 +1,3 @@
-// src/cli/runAllTests.ts
-
 import algorithms from "../algorithms";
 
 function runAllTests() {

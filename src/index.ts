@@ -19,14 +19,8 @@ export function log(message: string, verbose: boolean) {
   }
 }
 
-export type Flags = {
-  showInputOutputOnPass?: boolean;
-  verbose?: boolean;
-};
-
 export function runTests<I, O>(
   algorithmWithTests: AlgorithmWithTests<I, O>,
-  flags: Flags = {},
 ): void {
   console.log(`Running tests for ${algorithmWithTests.name}`);
 
@@ -34,14 +28,15 @@ export function runTests<I, O>(
     const input = algorithmWithTests.cloneInput
       ? algorithmWithTests.cloneInput(test.input)
       : test.input;
+    const start = performance.now();
     const result = algorithmWithTests.algorithm(input);
+    const end = performance.now();
     const passed = JSON.stringify(result) === JSON.stringify(test.expected);
 
     console.log(`Test ${index + 1}: ${passed ? "PASSED" : "FAILED"}`);
-    if (!passed || flags.showInputOutputOnPass) {
-      console.log(`  Input:    ${JSON.stringify(test.input)}`);
-      console.log(`  Expected: ${JSON.stringify(test.expected)}`);
-      console.log(`  Got:      ${JSON.stringify(result)}`);
-    }
+    console.log(`  Time: ${end - start}ms`);
+    console.log(`  Input:    ${JSON.stringify(test.input)}`);
+    console.log(`  Expected: ${JSON.stringify(test.expected)}`);
+    console.log(`  Got:      ${JSON.stringify(result)}`);
   });
 }
