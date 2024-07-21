@@ -1,20 +1,11 @@
 import { AlgorithmWithTests } from "..";
 
-function implementation<T>(input: T[]): T[] {
-  for (let i = 1; i < input.length; i++) {
-    const key = input[i];
-    let j = i - 1;
-    while (i > 0 && input[j] > key) {
-      input[j + 1] = input[j];
-      j--;
-    }
-    input[j + 1] = key;
-  }
-  return input;
+function implementation(input: number[]): number[] {
+  return input.sort((a, b) => a - b);
 }
 
 const algorithm: AlgorithmWithTests<number[], number[]> = {
-  name: "insertion-sort",
+  name: "built-in",
   algorithm: implementation,
   tests: [
     { input: [3, 2, 1], expected: [1, 2, 3] },

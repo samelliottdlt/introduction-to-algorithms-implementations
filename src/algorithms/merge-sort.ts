@@ -41,7 +41,7 @@ function implementation(input: number[]): number[] {
   return mergeSort(input, 0, input.length - 1);
 }
 
-const mergeSortAlgorithm: AlgorithmWithTests<number[], number[]> = {
+const algorithm: AlgorithmWithTests<number[], number[]> = {
   name: "merge-sort",
   algorithm: implementation,
   tests: [
@@ -54,4 +54,4 @@ const mergeSortAlgorithm: AlgorithmWithTests<number[], number[]> = {
   cloneInput: (input) => [...input],
 };
 
-export default mergeSortAlgorithm;
+export default algorithm;

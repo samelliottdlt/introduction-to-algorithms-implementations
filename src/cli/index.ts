@@ -1,4 +1,4 @@
-import { runTests, Flags } from "..";
+import { runTests } from "..";
 import algorithms from "../algorithms";
 
 function listAlgorithms() {
@@ -8,29 +8,8 @@ function listAlgorithms() {
     .forEach((name) => console.log(name));
 }
 
-function parseFlags(args: string[]): Flags {
-  const flags: Flags = {};
-  for (let i = 2; i < args.length; i++) {
-    const arg = args[i];
-    if (arg.startsWith("--")) {
-      const flagName = arg.slice(2);
-      if (flagName === "showInputOutputOnPass") {
-        flags.showInputOutputOnPass = true;
-      } else {
-        console.warn(`Unknown flag: ${flagName}`);
-      }
-    }
-  }
-
-  return flags;
-}
-
 function printUsage() {
-  console.log("Usage: npm start <algorithm-name> [flags]");
-  console.log("Flags:");
-  console.log(
-    "  --showInputOutputOnPass  Show input and output for passing tests",
-  );
+  console.log("Usage: npm start <algorithm-name>");
 }
 
 function main() {
@@ -43,7 +22,6 @@ function main() {
   }
 
   const algorithmName = args[2];
-  const flags = parseFlags(args);
 
   const algorithm = algorithms.find(
     (algorithm) => algorithm.name === algorithmName,
@@ -55,7 +33,7 @@ function main() {
     process.exit(1);
   }
 
-  runTests(algorithm, flags);
+  runTests(algorithm);
 }
 
 main();
