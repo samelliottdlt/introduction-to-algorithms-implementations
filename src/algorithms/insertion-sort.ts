@@ -1,6 +1,6 @@
 import { AlgorithmWithTests } from "..";
 
-export function implementation<T>(input: T[]): T[] {
+function implementation<T>(input: T[]): T[] {
   for (let i = 1; i < input.length; i++) {
     const key = input[i];
     let j = i - 1;
