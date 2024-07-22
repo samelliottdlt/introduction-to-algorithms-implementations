@@ -1,42 +1,7 @@
-export type Algorithm<I, O> = (input: I) => O;
+export type CompareFunction<T, O> = (a: T, b: T) => O;
 
-export type Test<I, O> = {
-  input: I;
-  expected: O;
-};
-
-export type AlgorithmWithTests<I, O> = {
-  name: string;
-  algorithm: Algorithm<I, O>;
-  tests: Test<I, O>[];
-  // some algorithms mutate the input, so we need to clone it before running the tests
-  cloneInput?: (input: I) => I;
-};
-
-export function log(message: string, verbose: boolean) {
-  if (verbose) {
-    console.log(message);
-  }
-}
-
-export function runTests<I, O>(
-  algorithmWithTests: AlgorithmWithTests<I, O>,
-): void {
-  console.log(`Running tests for ${algorithmWithTests.name}`);
-
-  algorithmWithTests.tests.forEach((test, index) => {
-    const input = algorithmWithTests.cloneInput
-      ? algorithmWithTests.cloneInput(test.input)
-      : test.input;
-    const start = performance.now();
-    const result = algorithmWithTests.algorithm(input);
-    const end = performance.now();
-    const passed = JSON.stringify(result) === JSON.stringify(test.expected);
-
-    console.log(`Test ${index + 1}: ${passed ? "PASSED" : "FAILED"}`);
-    console.log(`  Time: ${end - start}ms`);
-    console.log(`  Input:    ${JSON.stringify(test.input)}`);
-    console.log(`  Expected: ${JSON.stringify(test.expected)}`);
-    console.log(`  Got:      ${JSON.stringify(result)}`);
-  });
-}
+export type Algorithm<I, O, T, C> = (
+  input: I,
+  compare?: CompareFunction<T, C>,
+  ascending?: boolean,
+) => O;
